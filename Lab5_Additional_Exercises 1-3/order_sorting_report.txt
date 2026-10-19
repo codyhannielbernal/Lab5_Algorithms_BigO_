@@ -1,0 +1,88 @@
+==========================================================================
+E-COMMERCE ORDER PROCESSING - SORTING PERFORMANCE REPORT
+==========================================================================
+STUDENT-SPECIFIC VALUES
+--------------------------------------------------------------------------
+LAST_NAME        : Bernal
+STUDENT_ID       : TUPM-26-1940
+FAVORITE_ARTIST  : BTS
+SEED_DIGIT       : 0
+ID_SUM           : 22
+NAME_LENGTH      : 6
+ARTIST_LENGTH    : 3
+ARTIST_SUM       : 41
+
+1. GENERATED ORDER DATASET
+--------------------------------------------------------------------------
+Rule: 22 orders (ID_SUM), first = 1000 + ARTIST_SUM, step = NAME_LENGTH
+[1041, 1047, 1053, 1059, 1065, 1071, 1077, 1083, 1089, 1095, 1101, 1107, 1113, 1119, 1125, 1131, 1137, 1143, 1149, 1155, 1161, 1167]
+
+2. SORTED, REVERSE, AND RANDOM INPUTS (same orders, different arrangement)
+--------------------------------------------------------------------------
+Sorted:  [1041, 1047, 1053, 1059, 1065, 1071, 1077, 1083, 1089, 1095, 1101, 1107, 1113, 1119, 1125, 1131, 1137, 1143, 1149, 1155, 1161, 1167]
+Reverse: [1167, 1161, 1155, 1149, 1143, 1137, 1131, 1125, 1119, 1113, 1107, 1101, 1095, 1089, 1083, 1077, 1071, 1065, 1059, 1053, 1047, 1041]
+Random:  [1041, 1059, 1119, 1101, 1047, 1155, 1149, 1107, 1083, 1095, 1071, 1137, 1125, 1143, 1167, 1077, 1065, 1053, 1131, 1113, 1161, 1089]
+(Random uses a fixed shuffle seed = ID_SUM x ARTIST_SUM = 902, so results are repeatable.)
+
+3. COMPARISON COUNTS
+--------------------------------------------------------------------------
+Algorithm               Sorted     Reverse      Random
+Bubble Sort                 21         231         216
+Selection Sort             231         231         231
+Insertion Sort              21         231         119
+
+4. MOVEMENT COUNTS (a swap = 2 movements, a shift or placement = 1)
+--------------------------------------------------------------------------
+Algorithm               Sorted     Reverse      Random
+Bubble Sort                  0         462         196
+Selection Sort               0          22          32
+Insertion Sort               0         252         115
+
+5. EXECUTION TIMES (microseconds, average of 2000 runs)
+--------------------------------------------------------------------------
+Algorithm               Sorted     Reverse      Random
+Bubble Sort               4.15       82.20       48.21
+Selection Sort           25.27       32.70       28.76
+Insertion Sort            3.42       81.72       37.92
+
+6. SORTING VERIFICATION
+--------------------------------------------------------------------------
+Algorithm               Sorted     Reverse      Random
+Bubble Sort               PASS        PASS        PASS
+Selection Sort            PASS        PASS        PASS
+Insertion Sort            PASS        PASS        PASS
+All 9 runs match Python's sorted(): YES
+
+7. BIG O ANALYSIS
+--------------------------------------------------------------------------
+Algorithm         Best     Average   Worst    Space  Stable
+Bubble Sort       O(n)     O(n^2)    O(n^2)   O(1)   Yes
+Selection Sort    O(n^2)   O(n^2)    O(n^2)   O(1)   No
+Insertion Sort    O(n)     O(n^2)    O(n^2)   O(1)   Yes
+(Bubble Sort uses an early exit when a pass makes no swaps, which gives its O(n) best case.)
+For n = 22: n-1 = 21 comparisons (linear), n(n-1)/2 = 231 comparisons (quadratic).
+
+8. BEST-, AVERAGE-, AND WORST-CASE OBSERVATIONS
+--------------------------------------------------------------------------
+Best case  = Sorted input, Worst case = Reverse input, Average case = Random input.
+Bubble Sort: comparisons 21 (best) / 216 (average) / 231 (worst); movements 0 / 196 / 462
+Selection Sort: comparisons 231 (best) / 231 (average) / 231 (worst); movements 0 / 32 / 22
+Insertion Sort: comparisons 21 (best) / 119 (average) / 231 (worst); movements 0 / 115 / 252
+
+Sorted input:  fewest comparisons = Bubble Sort & Insertion Sort; fewest movements = Bubble Sort & Selection Sort & Insertion Sort; fastest = Insertion Sort
+Reverse input: fewest comparisons = Bubble Sort & Selection Sort & Insertion Sort; fewest movements = Selection Sort; fastest = Selection Sort
+Random input:  fewest comparisons = Insertion Sort; fewest movements = Selection Sort; fastest = Selection Sort
+
+Observations:
+- Selection Sort makes 231 comparisons on every input, so its comparison count does not
+  depend on the order. It makes the fewest movements overall (at most one swap per pass).
+- Bubble and Insertion Sort adapt to the input: on sorted data they need only n-1 comparisons
+  and no movements, but on reverse data they reach the quadratic worst case.
+- Random input falls between the two extremes, matching the O(n^2) average case.
+- Execution times follow the comparison and movement counts, but they vary with the machine
+  and include the cost of the counters; the counts are the more reliable measure.
+
+FINAL OUTPUT
+--------------------------------------------------------------------------
+22 orders sorted by 3 algorithms under 3 input conditions: all 9 results verified sorted.
+==========================================================================

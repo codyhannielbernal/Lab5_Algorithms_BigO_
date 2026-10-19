@@ -1,0 +1,67 @@
+==========================================================================
+EMERGENCY DISPATCH RECORD SEARCH REPORT
+==========================================================================
+STUDENT-SPECIFIC VALUES
+--------------------------------------------------------------------------
+LAST_NAME        : Bernal
+STUDENT_ID       : TUPM-26-1940
+FAVORITE_ARTIST  : BTS
+SEED_DIGIT       : 0
+ID_SUM           : 22
+NAME_LENGTH      : 6
+ARTIST_LENGTH    : 3
+ARTIST_SUM       : 41
+RECORD COUNT     : 22  (= ID_SUM)
+ROTATION POINT   : 0  (first 0 record(s) moved to the end)
+  Note: rotation point 0 means the list is not rotated; the search still works.
+
+1. ORIGINAL DATASET (sorted)
+--------------------------------------------------------------------------
+[1041, 1047, 1053, 1059, 1065, 1071, 1077, 1083, 1089, 1095, 1101, 1107, 1113, 1119, 1125, 1131, 1137, 1143, 1149, 1155, 1161, 1167]
+
+2. ROTATED DATASET
+--------------------------------------------------------------------------
+[1041, 1047, 1053, 1059, 1065, 1071, 1077, 1083, 1089, 1095, 1101, 1107, 1113, 1119, 1125, 1131, 1137, 1143, 1149, 1155, 1161, 1167]
+
+3. TARGET INCIDENT
+--------------------------------------------------------------------------
+Target = record #19 of the original list (index = (ID_SUM + ARTIST_SUM) mod 22) -> 1155
+
+4. SEARCH RESULTS - target incident: 1155
+--------------------------------------------------------------------------
+Rotated binary search steps (lo, hi, mid, value at mid):
+   (0, 21, 10, 1101)
+   (11, 21, 16, 1137)
+   (17, 21, 19, 1155)
+Algorithm               Result                                Comparisons  Total checks
+Rotated Binary Search   FOUND at index 19 (position 20)       3            9
+Linear Search           FOUND at index 19 (position 20)       20           20
+
+4. SEARCH RESULTS - missing incident (not-found demo): 1168
+--------------------------------------------------------------------------
+Rotated binary search steps (lo, hi, mid, value at mid):
+   (0, 21, 10, 1101)
+   (11, 21, 16, 1137)
+   (17, 21, 19, 1155)
+   (20, 21, 20, 1161)
+   (21, 21, 21, 1167)
+Algorithm               Result                                Comparisons  Total checks
+Rotated Binary Search   NOT FOUND                             5            20
+Linear Search           NOT FOUND                             22           22
+
+5. COMPARISON COUNTS ACROSS ALL RECORDS (searching each record once)
+--------------------------------------------------------------------------
+Algorithm               Best    Average   Worst
+Rotated Binary Search   1       3.82      5
+Linear Search           1       11.50     22
+
+6. TIME AND SPACE COMPLEXITY
+--------------------------------------------------------------------------
+Algorithm               Time (best/avg/worst)         Space
+Rotated Binary Search   O(1) / O(log n) / O(log n)    O(1)
+Linear Search           O(1) / O(n) / O(n)            O(1)
+For n = 22: log2(n) is about 4.46, so binary search needs at most 6 halving steps,
+while linear search may need up to 22 comparisons. Binary search stays O(log n) because each
+step discards half of the list by finding which half is still sorted; both searches use only a
+few index variables (no extra list), so space is O(1).
+==========================================================================

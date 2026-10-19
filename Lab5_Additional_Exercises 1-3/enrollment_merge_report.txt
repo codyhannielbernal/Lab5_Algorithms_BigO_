@@ -1,0 +1,56 @@
+==========================================================================
+UNIVERSITY ENROLLMENT RECORDS - CONSOLIDATION REPORT
+==========================================================================
+STUDENT-SPECIFIC VALUES
+--------------------------------------------------------------------------
+LAST_NAME        : Bernal
+STUDENT_ID       : TUPM-26-1940
+FAVORITE_ARTIST  : BTS
+SEED_DIGIT       : 0
+ID_SUM           : 22
+NAME_LENGTH      : 6
+ARTIST_LENGTH    : 3
+ARTIST_SUM       : 41
+
+1. DEPARTMENT A DATASET
+--------------------------------------------------------------------------
+Rule: 22 records (ID_SUM), first = 1000 + SEED_DIGIT, step = (ID_SUM mod 10) + 1
+[1000, 1003, 1006, 1009, 1012, 1015, 1018, 1021, 1024, 1027, 1030, 1033, 1036, 1039, 1042, 1045, 1048, 1051, 1054, 1057, 1060, 1063]
+
+2. DEPARTMENT B DATASET
+--------------------------------------------------------------------------
+Rule: 9 records (NAME_LENGTH + ARTIST_LENGTH), first = 1000 + ARTIST_LENGTH, step = NAME_LENGTH + 1
+[1003, 1010, 1017, 1024, 1031, 1038, 1045, 1052, 1059]
+
+3. CONSOLIDATED DATASET (source department in brackets)
+--------------------------------------------------------------------------
+1000[A], 1003[A], 1003[B], 1006[A], 1009[A], 1010[B], 1012[A], 1015[A], 1017[B], 1018[A], 1021[A], 1024[A], 1024[B], 1027[A], 1030[A], 1031[B], 1033[A], 1036[A], 1038[B], 1039[A], 1042[A], 1045[A], 1045[B], 1048[A], 1051[A], 1052[B], 1054[A], 1057[A], 1059[B], 1060[A], 1063[A]
+Student IDs in both departments (kept as separate records): [1003, 1024, 1045]
+
+4. NUMBER OF RECORDS
+--------------------------------------------------------------------------
+Before consolidation : A = 22, B = 9, total = 31
+After consolidation  : 31
+
+5. COMPARISON COUNT
+--------------------------------------------------------------------------
+Comparisons performed: 29
+Best case  (one list is entirely smaller): min(n, m) = 9
+Worst case (records alternate)           : n + m - 1 = 30
+
+6. ORDERING VERIFICATION
+--------------------------------------------------------------------------
+Ascending order                 : PASS
+Record count (A + B = merged)   : PASS
+Same records as A + B           : PASS
+
+7. TIME AND SPACE COMPLEXITY
+--------------------------------------------------------------------------
+Time : O(n + m) - each record is placed once; at most n + m - 1 = 30 comparisons
+Space: O(n + m) - a new list holds all merged records (the inputs are not modified)
+       (the extra working variables are O(1))
+
+FINAL OUTPUT
+--------------------------------------------------------------------------
+Final consolidated enrollment list (31 records): [1000, 1003, 1003, 1006, 1009, 1010, 1012, 1015, 1017, 1018, 1021, 1024, 1024, 1027, 1030, 1031, 1033, 1036, 1038, 1039, 1042, 1045, 1045, 1048, 1051, 1052, 1054, 1057, 1059, 1060, 1063]
+==========================================================================
